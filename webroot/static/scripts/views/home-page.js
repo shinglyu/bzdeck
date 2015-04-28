@@ -194,6 +194,31 @@ BzDeck.views.HomePage.prototype.apply_vertical_layout = function () {
     }
   };
 
+  let add_tag = (bug, tagName) => {
+    console.log(bug.data._tags) 
+    if (!bug.data._tags) {
+      bug.data._tags = new Set([tagName]);
+    } else {
+      bug.data._tags.add(tagName);
+    }
+
+    bug.save();
+    console.log(bug.data._tags)
+    FlareTail.util.event.trigger(window, 'Bug:TagsChanged');//, { 'detail': { 'bug': this.bug }});
+  };
+
+  let prompt_for_tag = bug => {
+    (new this.widget.Dialog({
+      type:"prompt",
+      title:"Tag this bug",
+      message:"Please input the tag name",
+      onaccept: function(value){
+        add_tag(bug, value);
+        //alert("Got " + value);
+      }
+    })).show();
+  }
+
   if (!this.vertical_thread_initialized) {
     // Select the first bug on the list automatically when a folder is opened
     // TODO: Remember the last selected bug for each folder
@@ -208,7 +233,9 @@ BzDeck.views.HomePage.prototype.apply_vertical_layout = function () {
         event.stopPropagation();
       }
       else if (event.target.matches('[data-field="_tagged"]')) {
-        alert('tagged!');
+        //alert('tagged!');
+        BzDeck.models.bugs.get(event.target.parentElement.dataset.id)
+        .then(bug => prompt_for_tag(bug));
         event.stopPropagation();
       }
     });
