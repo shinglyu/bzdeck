@@ -660,6 +660,7 @@
         <span itemprop="name"></span>
         <time data-simple="true" itemprop="dateModified"></time>
         <span data-field="_starred" tabindex="0" role="checkbox" data-attrs="aria-checked"></span>
+        <span data-field="_tagged" tabindex="0" role="checkbox" data-attrs="aria-checked"></span>
       </li>
     </template><!-- end #vertical-thread-item -->
     <template id="bug-tooltip">

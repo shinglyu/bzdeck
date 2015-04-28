@@ -1500,7 +1500,7 @@ main {
 .bug-attachments [role="option"] [itemprop="dateModified"],
 [id$="vertical-thread"] [itemprop="dateModified"] {
   top: 1rem;
-  right: 3.2rem;
+  right: 5.4rem;
   opacity: .8;
   font-size: 1.1rem;
 }
@@ -1527,6 +1527,30 @@ main {
 
 [id$="vertical-thread"] [data-field="_starred"][aria-checked="true"]::before {
   content: "\F005";
+}
+
+[id$="vertical-thread"] [data-field="_tagged"] {
+  top: .4rem;
+  right: 2.4rem;
+  width: 2.4rem;
+  height: 2.4rem;
+  pointer-events: auto;
+}
+
+[id$="vertical-thread"] [data-field="_tagged"]::before {
+  margin: .4rem;
+  width: 1.6rem;
+  height: 1.6rem;
+  font-size: 1.6rem;
+  font-family: FontAwesome;
+}
+
+[id$="vertical-thread"] [data-field="_tagged"][aria-checked="false"]::before {
+  content: "\F02B";
+}
+
+[id$="vertical-thread"] [data-field="_tagged"][aria-checked="true"]::before {
+  content: "\F02B";
 }
 
 .bug-list col[data-id="id"][data-hidden="false"] {

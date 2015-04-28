@@ -207,6 +207,10 @@ BzDeck.views.HomePage.prototype.apply_vertical_layout = function () {
           .then(bug => bug.starred = event.target.matches('[aria-checked="false"]'));
         event.stopPropagation();
       }
+      else if (event.target.matches('[data-field="_tagged"]')) {
+        alert('tagged!');
+        event.stopPropagation();
+      }
     });
 
     this.vertical_thread_initialized = true;
