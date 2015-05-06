@@ -26,11 +26,34 @@ BzDeck.views.Sidebar = function SidebarView () {
 
   new this.widget.ScrollBar($sidebar.querySelector('div'));
 
-  this.$$folders = new this.widget.ListBox(document.querySelector('#sidebar-folder-list'), BzDeck.config.folders);
-  this.$$folders.bind('Selected', event => this.trigger(':FolderSelected', { 'id': event.detail.ids[0] }));
+  /*
+    {
+      'id': 'sidebar-folders--all',
+      'label': 'All Bugs',
+      'data': { 'id': 'all' }
+    }
+  */ 
+  BzDeck.models.subscriptions = new BzDeck.models.Subscriptions();
+  BzDeck.models.subscriptions.get_tags().then(tags => {
+    var folders = BzDeck.config.folders;
+    console.log(folders)
+    for (var tag of tags){
+      folders.push({
+        'id': 'sidebar-folders--' + tag,
+        'label': tag,
+        'data': { 'id': tag }
+      });
+    }
+    console.log(folders)
 
-  this.on('C:FolderOpened', data => this.open_folder(data.folder_id, data.bugs));
-  this.on('C:UnreadToggled', data => BzDeck.controllers.global.toggle_unread(data.number));
+    //this.$$folders = new this.widget.ListBox(document.querySelector('#sidebar-folder-list'), BzDeck.config.folders);
+    this.$$folders = new this.widget.ListBox(document.querySelector('#sidebar-folder-list'), folders);
+    this.$$folders.bind('Selected', event => this.trigger(':FolderSelected', { 'id': event.detail.ids[0] }));
+
+    this.on('C:FolderOpened', data => this.open_folder(data.folder_id, data.bugs));
+    this.on('C:UnreadToggled', data => BzDeck.controllers.global.toggle_unread(data.number));
+    
+  })
 };
 
 BzDeck.views.Sidebar.prototype = Object.create(BzDeck.views.Base.prototype);

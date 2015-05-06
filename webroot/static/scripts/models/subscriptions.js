@@ -74,7 +74,7 @@ BzDeck.models.Subscriptions.prototype.get = function (id) {
       // Starred bugs may include non-subscribed bugs, so get all bugs, not only subscriptions
       bugs = new Map([for (bug of bugs.values()) if (bug.starred) [bug.id, bug]]);
     }
-
+    
     return Promise.resolve(bugs);
   });
 };
@@ -151,5 +151,17 @@ BzDeck.models.Subscriptions.prototype.fetch = function () {
 
       return Promise.all([]);
     }).then(bugs => Promise.resolve(bugs), event => Promise.reject(new Error('Failed to load data.'))); // l10n
+  });
+};
+
+BzDeck.models.Subscriptions.prototype.get_tags = function() {
+  return BzDeck.models.bugs.get_all().then(bugs => {
+    var tags = new Set();
+    for (var bug of bugs.values()) {
+      if (!!bug.data._tags){
+        bug.data._tags.forEach(tag => tags.add(tag));
+      }
+    }
+    return Promise.resolve(tags)
   });
 };
