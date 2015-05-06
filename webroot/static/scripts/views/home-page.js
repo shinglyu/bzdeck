@@ -68,6 +68,8 @@ BzDeck.views.HomePage.prototype.connect = function (folder_id) {
       $tab = document.querySelector('#tab-home'),
       $$tablist = BzDeck.views.toolbar.$$tablist;
 
+  console.log(folder_id)
+  console.log($folder)
   if (!$folder) {
     // Unknown folder; ignore
     BzDeck.router.navigate('/home/inbox');

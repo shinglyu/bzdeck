@@ -74,6 +74,8 @@ BzDeck.models.Subscriptions.prototype.get = function (id) {
       // Starred bugs may include non-subscribed bugs, so get all bugs, not only subscriptions
       bugs = new Map([for (bug of bugs.values()) if (bug.starred) [bug.id, bug]]);
     }
+
+    bugs = new Map([for (bug of bugs.values()) if (!!bug.data._tags && bug.data._tags.has(id)) [bug.id, bug]]);
     
     return Promise.resolve(bugs);
   });

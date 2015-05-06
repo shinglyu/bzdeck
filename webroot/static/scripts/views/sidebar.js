@@ -33,6 +33,7 @@ BzDeck.views.Sidebar = function SidebarView () {
       'data': { 'id': 'all' }
     }
   */ 
+  this.$$folders = new this.widget.ListBox(document.querySelector('#sidebar-folder-list'), BzDeck.config.folders);
   BzDeck.models.subscriptions = new BzDeck.models.Subscriptions();
   BzDeck.models.subscriptions.get_tags().then(tags => {
     var folders = BzDeck.config.folders;
